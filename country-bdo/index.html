@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>COUNTRY | 黒い砂漠 ギルド</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="common.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Noto+Serif+JP:wght@300;400;600;700&family=Shippori+Mincho:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ===== CANVAS HERO BACKGROUND ===== -->
+  <canvas id="hero-canvas"></canvas>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <img src="guild-logo.png" alt="COUNTRY" class="nav-logo-img">
+        <span class="logo-text">COUNTRY</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#about">ギルドについて</a></li>
+        <li><a href="#activities">活動内容</a></li>
+        <li><a href="#features">特徴</a></li>
+        <li><a href="gallery.html">ギャラリー</a></li>
+        <li><a href="schedule.html">スケジュール</a></li>
+        <li><a href="rules.html">ルール</a></li>
+        <li><a href="#join">加入する</a></li>
+      </ul>
+      <button class="nav-toggle" id="nav-toggle" aria-label="メニュー">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+      <ul>
+        <li><a href="#about">ギルドについて</a></li>
+        <li><a href="#activities">活動内容</a></li>
+        <li><a href="#features">特徴</a></li>
+        <li><a href="gallery.html">ギャラリー</a></li>
+        <li><a href="schedule.html">スケジュール</a></li>
+        <li><a href="rules.html">ルール</a></li>
+        <li><a href="#join">加入する</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ===== HERO SECTION ===== -->
+  <section id="hero">
+    <div class="hero-overlay"></div>
+    <canvas id="particle-canvas"></canvas>
+    <div class="hero-content">
+      <div class="hero-badge">🌸 黒い砂漠 ギルド 🌸</div>
+      <h1 class="hero-title">
+        <span class="title-line">GUILD</span>
+        <span class="title-main">COUNTRY</span>
+      </h1>
+      <div class="hero-since">Since 2021.03.22</div>
+      <div class="hero-divider">
+        <span class="divider-line"></span>
+        <span class="divider-icon">🌸</span>
+        <span class="divider-line"></span>
+      </div>
+      <p class="hero-subtitle">いっしょに戦って、笑って、強くなろう！🌸<br>あなたの居場所、ここにあるよ。</p>
+      <div class="hero-buttons">
+        <a href="#join" class="btn btn-primary">ギルドに加入する</a>
+        <a href="#about" class="btn btn-secondary">詳しく見る</a>
+      </div>
+    </div>
+    <div class="hero-scroll-hint">
+      <span>SCROLL</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT SECTION ===== -->
+  <section id="about">
+    <div class="section-bg about-bg"></div>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">About Us</span>
+        <h2 class="section-title">COUNTRYとは</h2>
+        <div class="section-divider">
+          <span></span><span class="diamond">◆</span><span></span>
+        </div>
+      </div>
+      <div class="about-grid">
+        <div class="about-visual">
+          <canvas id="crest-canvas" width="320" height="320"></canvas>
+          <div class="about-visual-glow"></div>
+        </div>
+        <div class="about-text">
+          <p class="about-lead">COUNTRYは、<strong>みんなでわいわい楽しむコミュニティギルド</strong>だよ！</p>
+          <p>2021年から続く老舗ギルド🌸黒い砂漠のいろんなコンテンツを仲間と一緒に遊びながら、対人コンテンツにも元気よく挑戦してる。対人初心者でも全然OK！みんなで教え合いながらどんどん上手くなれるよ🌟</p>
+          <p>強くなることより、みんなで笑ったり語ったり、たまに励まし合ったり——そんなあったかいコミュニティを大事にしてるギルドだよ。</p>
+          <div class="about-stats">
+            <div class="stat-item">
+              <span class="stat-number" data-target="43">0</span>
+              <span class="stat-unit">人</span>
+              <span class="stat-label">メンバー</span>
+            </div>
+            <div class="stat-divider">|</div>
+            <div class="stat-item">
+              <span class="stat-number" data-target="6">0</span>
+              <span class="stat-unit">年</span>
+              <span class="stat-label">活動中</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ACTIVITIES SECTION ===== -->
+  <section id="activities">
+    <div class="section-bg activities-bg"></div>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Activities</span>
+        <h2 class="section-title">活動内容</h2>
+        <div class="section-divider">
+          <span></span><span class="diamond">◆</span><span></span>
+        </div>
+        <p class="section-desc">COUNTRYではいろんなコンテンツをみんなで楽しんでるよ🎮</p>
+      </div>
+
+      <div class="activities-grid">
+
+        <div class="activity-card" data-index="0">
+          <div class="activity-canvas-wrap">
+            <canvas class="activity-canvas" width="400" height="200" data-type="party"></canvas>
+          </div>
+          <div class="activity-card-body">
+            <div class="activity-icon">⚔️</div>
+            <h3>パーティーコンテンツ</h3>
+            <p>パーティー祠やパーティー狩りなど多様なPTコンテンツを随時開催してるよ！初心者も経験者も関係なくみんなで楽しもう🗡️</p>
+            <div class="activity-tag">随時開催</div>
+          </div>
+        </div>
+
+        <div class="activity-card" data-index="1">
+          <div class="activity-canvas-wrap">
+            <canvas class="activity-canvas" width="400" height="200" data-type="raid"></canvas>
+          </div>
+          <div class="activity-card-body">
+            <div class="activity-icon">🐉</div>
+            <h3>レイドボス討伐</h3>
+            <p>毎週定期開催のレイドボス🐉レイド報酬はとても美味しいので参加必須！全員で連携して倒す達成感はハンパないよ🔥</p>
+            <div class="activity-tag">毎週定期</div>
+          </div>
+        </div>
+
+        <div class="activity-card" data-index="2">
+          <div class="activity-canvas-wrap">
+            <canvas class="activity-canvas" width="400" height="200" data-type="nodwar"></canvas>
+          </div>
+          <div class="activity-card-body">
+            <div class="activity-icon">🏰</div>
+            <h3>拠点戦</h3>
+            <p>週3回、初段拠点戦に参加してるよ！勝ち負けよりも楽しむことを前提にした緩い拠点戦だから、初めてでも全然OK🏰⚔️</p>
+            <div class="activity-tag">週3回</div>
+          </div>
+        </div>
+
+        <div class="activity-card activity-card--wide" data-index="3">
+          <div class="activity-canvas-wrap">
+            <canvas class="activity-canvas" width="800" height="200" data-type="pvp"></canvas>
+          </div>
+          <div class="activity-card-body">
+            <div class="activity-icon">⚡</div>
+            <h3>青戦（PvP）</h3>
+            <p>週2回、青戦に参加してるよ！こちらも勝ち負けよりも楽しむことを前提にした緩い青戦🌸やられても笑い飛ばして強くなろう⚡</p>
+            <div class="activity-tag">週2回</div>
+          </div>
+        </div>
+
+        <div class="activity-card" data-index="4">
+          <div class="activity-canvas-wrap">
+            <canvas class="activity-canvas" width="400" height="200" data-type="solaer"></canvas>
+          </div>
+          <div class="activity-card-body">
+            <div class="activity-icon">🎯</div>
+            <h3>カスタムソラレ等<br>対人練習会</h3>
+            <p>初心者でも参加しやすいカスタムソラレや自由決闘場1v1等、対人練習会もあり！少しずつ対人に慣れていこう🎯</p>
+            <div class="activity-tag">定期開催</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FEATURES SECTION ===== -->
+  <section id="features">
+    <div class="section-bg features-bg"></div>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Features</span>
+        <h2 class="section-title">COUNTRYの特徴</h2>
+        <div class="section-divider">
+          <span></span><span class="diamond">◆</span><span></span>
+        </div>
+      </div>
+      <div class="features-list">
+        <div class="feature-item reveal">
+          <div class="feature-number">01</div>
+          <div class="feature-visual">
+            <canvas class="feature-canvas" width="120" height="120" data-type="comm"></canvas>
+          </div>
+          <div class="feature-content">
+            <h3>交流重視のコミュニティ</h3>
+            <p>ギルドマスターを始めメンバー間では日常会話をすることも多く、ゲームだけじゃなく世間話等もしてるよ！ゲームの話以外でも気軽に絡んでね😊</p>
+          </div>
+        </div>
+        <div class="feature-item reveal">
+          <div class="feature-number">02</div>
+          <div class="feature-visual">
+            <canvas class="feature-canvas" width="120" height="120" data-type="lesson"></canvas>
+          </div>
+          <div class="feature-content">
+            <h3>初心者向け対人講習あり</h3>
+            <p>対人コンテンツに触れてみたいけど勇気が出ない…そんな人でも優しく0から教えてあげるよ！最初はみんな初心者だから安心してね✨</p>
+          </div>
+        </div>
+        <div class="feature-item reveal">
+          <div class="feature-number">03</div>
+          <div class="feature-visual">
+            <canvas class="feature-canvas" width="120" height="120" data-type="warm"></canvas>
+          </div>
+          <div class="feature-content">
+            <h3>やさしくてあったかい雰囲気</h3>
+            <p>装備マウントやPSマウントなどは禁止！どのような人でも気軽にチャットができる環境を大切にしてるよ🌸みんな仲良く楽しくプレイしよう！</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== GALLERY PREVIEW SECTION ===== -->
+  <section id="gallery-preview">
+    <div class="section-bg gallery-preview-bg"></div>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Gallery</span>
+        <h2 class="section-title gp-title">冒険の記録</h2>
+        <div class="section-divider">
+          <span></span><span class="diamond">◆</span><span></span>
+        </div>
+        <p class="section-desc gp-desc">みんなで歩んできた冒険の軌跡🌸</p>
+      </div>
+      <div class="gp-grid">
+        <!-- =====================================================
+             ▼ 冒険の記録 — メイン画像（大）
+             画像を差し替える場合：src="" の中のパスを変更してください
+             推奨サイズ: 横800px × 縦420px 以上
+             ===================================================== -->
+        <div class="gp-item gp-large">
+          <img class="gp-img" src="" alt="冒険の記録メイン"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <canvas class="gp-canvas gp-fallback" data-scene="heidel" width="800" height="420"></canvas>
+          <div class="gp-overlay">
+            <span class="gp-tag">🌙 ハイデル郊外の夜</span>
+          </div>
+        </div>
+
+        <div class="gp-side">
+          <!-- ===================================================
+               ▼ サブ画像①（右上）
+               src="" にパスを入れると自動で切り替わります
+               推奨サイズ: 横400px × 縦200px 以上
+               =================================================== -->
+          <div class="gp-item">
+            <img class="gp-img" src="" alt="ギャラリーサブ画像1"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <canvas class="gp-canvas gp-fallback" data-scene="blossom" width="400" height="200"></canvas>
+            <div class="gp-overlay"><span class="gp-tag">🌸 桜の季節</span></div>
+          </div>
+
+          <!-- ===================================================
+               ▼ サブ画像②（右下）
+               src="" にパスを入れると自動で切り替わります
+               推奨サイズ: 横400px × 縦200px 以上
+               =================================================== -->
+          <div class="gp-item">
+            <img class="gp-img" src="" alt="ギャラリーサブ画像2"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <canvas class="gp-canvas gp-fallback" data-scene="calpheon" width="400" height="200"></canvas>
+            <div class="gp-overlay"><span class="gp-tag">🏙️ カルフェオンの夜景</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="gp-more-btn">
+        <a href="gallery.html" class="btn btn-primary">🖼️ ギャラリーをもっと見る</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SCHEDULE TEASER SECTION ===== -->
+  <section id="schedule-teaser">
+    <div class="section-bg schedule-teaser-bg"></div>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Schedule</span>
+        <h2 class="section-title">今週の活動予定</h2>
+        <div class="section-divider">
+          <span></span><span class="diamond">◆</span><span></span>
+        </div>
+      </div>
+      <div class="st-cards">
+        <div class="st-card reveal-item">
+          <div class="st-day">毎週土曜</div>
+          <div class="st-icon">🐉</div>
+          <div class="st-name">レイドボス</div>
+          <div class="st-time">22:00〜</div>
+        </div>
+        <div class="st-card st-card--green reveal-item">
+          <div class="st-day">毎週日・水・金</div>
+          <div class="st-icon">🏰</div>
+          <div class="st-name">拠点戦</div>
+          <div class="st-time">21:00〜</div>
+        </div>
+        <div class="st-card st-card--blue reveal-item">
+          <div class="st-day">毎週月・木</div>
+          <div class="st-icon">⚡</div>
+          <div class="st-name">青戦</div>
+          <div class="st-time">21:00〜</div>
+        </div>
+        <div class="st-card reveal-item">
+          <div class="st-day">毎週土曜 / 不定期</div>
+          <div class="st-icon">🎯</div>
+          <div class="st-name">対人練習会</div>
+          <div class="st-time">23:00〜</div>
+        </div>
+        <div class="st-card st-card--pink reveal-item">
+          <div class="st-day">毎日</div>
+          <div class="st-icon">⚔️</div>
+          <div class="st-name">PTコンテンツ</div>
+          <div class="st-time">20:00〜 人が揃い次第</div>
+        </div>
+      </div>
+      <div class="st-more-btn">
+        <a href="schedule.html" class="btn btn-secondary st-btn">🗓️ 詳細スケジュールを見る</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== JOIN SECTION ===== -->
+  <section id="join">
+    <div class="section-bg join-bg"></div>
+    <canvas id="join-canvas"></canvas>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Join Us</span>
+        <h2 class="section-title">一緒に冒険しよう</h2>
+        <div class="section-divider">
+          <span></span><span class="diamond">◆</span><span></span>
+        </div>
+        <p class="section-desc">いっしょに黒い砂漠を楽しもう！気軽に声かけてね🌸</p>
+      </div>
+      <div class="join-content">
+        <div class="join-requirements">
+          <h3 class="join-req-title">こんな人、大歓迎！</h3>
+          <ul class="req-list">
+            <li>
+              <span class="req-icon">✦</span>
+              <span>ギルドのルールを守れること</span>
+            </li>
+            <li>
+              <span class="req-icon">✦</span>
+              <span>仲間をリスペクトできること</span>
+            </li>
+            <li>
+              <span class="req-icon">✦</span>
+              <span>Discordが使えると尚よし！（推奨）</span>
+            </li>
+          </ul>
+          <div class="join-note">
+            <span>★</span> 装備・経験値は全然問わないよ！みんなでいっしょに育とう！
+          </div>
+        </div>
+        <div class="join-cta">
+          <div class="cta-box">
+            <div class="cta-glow"></div>
+            <h3>加入のしかた</h3>
+            <p>ゲーム内でギルドマスターか副マスターに<br>直接話しかけてもOK！<br>Discordからでも気軽に連絡してね🌸</p>
+            <div class="cta-buttons">
+              <a href="https://discord.com/users/xxuxxy" target="_blank" class="btn btn-primary btn-large">💬 Discordで申請する（xxuxxy）</a>
+            </div>
+            <div class="cta-divider">
+              <span></span><em>または</em><span></span>
+            </div>
+            <p class="cta-ingame">ゲーム内でのギルド名検索: <strong>「COUNTRY」</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer id="footer">
+    <div class="footer-top-deco"></div>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <span>✦</span> COUNTRY <span>✦</span>
+          </div>
+          <p class="footer-tagline">黒い砂漠 冒険者ギルド</p>
+        </div>
+        <div class="footer-links">
+          <a href="#about">ギルドについて</a>
+          <a href="#activities">活動内容</a>
+          <a href="#features">特徴</a>
+          <a href="gallery.html">ギャラリー</a>
+          <a href="schedule.html">スケジュール</a>
+          <a href="rules.html">ルール</a>
+          <a href="#join">加入する</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 COUNTRY Guild. All rights reserved.</p>
+        <p class="footer-disclaimer">「黒い砂漠」はPEARL ABYSS社の登録商標です。本サイトは非公式のファンサイトです。</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="images.js"></script>
+  <script src="common.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
