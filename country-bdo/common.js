@@ -6,34 +6,46 @@
 (function () {
   'use strict';
 
-  /* ── Nav scroll & hamburger (sub-pages) ────────────────── */
-  document.addEventListener('DOMContentLoaded', () => {
-    const navbar    = document.getElementById('navbar');
-    const navToggle = document.getElementById('nav-toggle');
-    const navMobile = document.getElementById('nav-mobile');
+  /* ── Nav scroll & hamburger ─────────────────────────────── */
+  function initNav() {
+    var navbar    = document.getElementById('navbar');
+    var navToggle = document.getElementById('nav-toggle');
+    var navMobile = document.getElementById('nav-mobile');
 
     if (navbar) {
-      window.addEventListener('scroll', () => {
+      window.addEventListener('scroll', function() {
         navbar.classList.toggle('scrolled', window.scrollY > 40);
       }, { passive: true });
     }
+
     if (navToggle && navMobile) {
-      navToggle.addEventListener('click', () => navMobile.classList.toggle('open'));
-      navMobile.querySelectorAll('a').forEach(a => {
-        a.addEventListener('click', () => navMobile.classList.remove('open'));
+      navToggle.addEventListener('click', function() {
+        navMobile.classList.toggle('open');
+      });
+      navMobile.querySelectorAll('a').forEach(function(a) {
+        a.addEventListener('click', function() {
+          navMobile.classList.remove('open');
+        });
       });
     }
 
     /* ── Smooth anchor scroll ────────────────────────────── */
-    document.querySelectorAll('a[href^="#"]').forEach(link => {
-      link.addEventListener('click', e => {
-        const target = document.querySelector(link.getAttribute('href'));
+    document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        var target = document.querySelector(link.getAttribute('href'));
         if (!target) return;
         e.preventDefault();
         window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 72, behavior: 'smooth' });
       });
     });
-  });
+  }
+
+  /* bodyの末尾で読み込まれているのでDOMは存在するが念のため両方対応 */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initNav);
+  } else {
+    initNav();
+  }
 
   /* ── Mini particle canvas for sub-page heroes ──────────── */
   window.initMiniParticles = function (canvasId) {
