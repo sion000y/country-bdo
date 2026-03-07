@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ギルドルール | COUNTRY</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="common.css">
+  <link rel="stylesheet" href="rules.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Noto+Serif+JP:wght@300;400;600;700&family=Shippori+Mincho:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <img src="guild-logo.png" alt="COUNTRY" class="nav-logo-img">
+        <span class="logo-text">COUNTRY</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="index.html#about">ギルドについて</a></li>
+        <li><a href="index.html#activities">活動内容</a></li>
+        <li><a href="gallery.html">ギャラリー</a></li>
+        <li><a href="schedule.html">スケジュール</a></li>
+        <li><a href="rules.html" class="nav-active">ルール</a></li>
+        <li><a href="index.html#join">加入する</a></li>
+      </ul>
+      <button class="nav-toggle" id="nav-toggle" aria-label="メニュー">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="index.html#about">ギルドについて</a></li>
+        <li><a href="index.html#activities">活動内容</a></li>
+        <li><a href="gallery.html">ギャラリー</a></li>
+        <li><a href="schedule.html">スケジュール</a></li>
+        <li><a href="rules.html">ルール</a></li>
+        <li><a href="index.html#join">加入する</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ===== PAGE HERO ===== -->
+  <div class="page-hero">
+    <canvas class="page-hero-particles" id="page-hero-canvas"></canvas>
+    <div class="page-hero-content">
+      <div class="hero-badge">📜 Guild Rules 📜</div>
+      <h1>ギルドルール</h1>
+      <p>みんなが楽しく遊ぶための約束事だよ🌸</p>
+      <div class="page-hero-deco">
+        <span></span><em>✦</em><span></span>
+      </div>
+    </div>
+    <div class="breadcrumb">
+      <a href="index.html">HOME</a><span>›</span>RULES
+    </div>
+  </div>
+
+  <!-- ===== RULES BODY ===== -->
+  <div class="subpage-body">
+    <div class="container">
+
+      <!-- Intro -->
+      <div class="rules-intro reveal-item">
+        <canvas id="rules-banner-canvas" width="1200" height="200"></canvas>
+        <div class="rules-intro-text">
+          <p>COUNTRYはみんなが<strong>楽しく・気軽に</strong>プレイできることを最優先にしてるギルドだよ！<br>
+          以下のルールを守って、みんなで素敵な冒険をしようね🌸</p>
+        </div>
+      </div>
+
+      <!-- Main Rules -->
+      <div class="sp-section-header" style="margin-top:3.5rem;">
+        <span class="sp-section-label">Rules</span>
+        <h2 class="sp-section-title">ギルドルール一覧</h2>
+        <div class="sp-divider"><span></span><em>◆</em><span></span></div>
+      </div>
+
+      <div class="rules-grid">
+
+        <div class="rule-card reveal-item card-pink rule-must">
+          <div class="rule-num">01</div>
+          <div class="rule-icon">🚫</div>
+          <h3>メンバーへの不快な言動は禁止</h3>
+          <p>メンバーに対する暴言・誹謗中傷・マウント行為はNGだよ。装備マウント・PSマウントも同様！みんなが気軽に話せる環境を守ろう🌸</p>
+          <div class="rule-level rule-must-tag">必須ルール</div>
+        </div>
+
+        <div class="rule-card reveal-item card-pink rule-must">
+          <div class="rule-num">02</div>
+          <div class="rule-icon">⚔️</div>
+          <h3>アルシャサーバー以外でのPK禁止</h3>
+          <p>アルシャサーバー以外でのPKはNG。PKKはOKだよ！COUNTRYメンバーとして恥ずかしくない行動を心がけてね。</p>
+          <div class="rule-level rule-must-tag">必須ルール</div>
+        </div>
+
+        <div class="rule-card reveal-item card-pink rule-must">
+          <div class="rule-num">03</div>
+          <div class="rule-icon">📅</div>
+          <h3>長期ログインなし = 脱退</h3>
+          <p>理由なく1ヶ月以上ログインがない場合は脱退してもらうことがあるよ。長期お休みの場合は事前にDiscordで一言連絡してくれるとうれしい！</p>
+          <div class="rule-level rule-must-tag">必須ルール</div>
+        </div>
+
+        <div class="rule-card reveal-item card-pink rule-spirit">
+          <div class="rule-num">04</div>
+          <div class="rule-icon">🤝</div>
+          <h3>みんなと仲良くプレイしよう</h3>
+          <p>困ってるメンバーがいたら助けてあげてね！教え合い・助け合いの精神がCOUNTRYの文化だよ。一緒に楽しい時間を作ろう🌟</p>
+          <div class="rule-level rule-spirit-tag">大切にしたいこと</div>
+        </div>
+
+        <div class="rule-card reveal-item card-pink rule-spirit">
+          <div class="rule-num">05</div>
+          <div class="rule-icon">💬</div>
+          <h3>Discordを活用しよう</h3>
+          <p>コミュニケーションはギルドチャットが中心だよ！ただDiscordでのSS共有や画像交換なんかも楽しいから、気軽に入ってみてね🌸</p>
+          <div class="rule-level rule-spirit-tag">推奨</div>
+        </div>
+
+        <div class="rule-card reveal-item card-pink rule-spirit">
+          <div class="rule-num">06</div>
+          <div class="rule-icon">🎉</div>
+          <h3>ギルドイベントに積極的に参加しよう</h3>
+          <p>拠点戦・青戦・レイドボス等のイベントはできるだけ参加してね！もちろん都合が合わないときは全然OK。参加できるときにわいわい楽しもう⚔️</p>
+          <div class="rule-level rule-spirit-tag">推奨</div>
+        </div>
+
+      </div>
+
+      <!-- FAQ section -->
+      <div class="sp-section-header" style="margin-top:5rem;">
+        <span class="sp-section-label">FAQ</span>
+        <h2 class="sp-section-title">よくある質問</h2>
+        <div class="sp-divider"><span></span><em>◆</em><span></span></div>
+      </div>
+
+      <div class="faq-list">
+
+        <div class="faq-item reveal-item">
+          <button class="faq-q" aria-expanded="false">
+            <span class="faq-icon">🌸</span>
+            <span>装備が弱くても入れる？</span>
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-a">
+            <p>全然OK！装備のレベルは一切問わないよ。一緒に成長していこう🌟みんなにとって居心地のいいギルドを目指してるから、弱くても強くても関係ないよ！</p>
+          </div>
+        </div>
+
+        <div class="faq-item reveal-item">
+          <button class="faq-q" aria-expanded="false">
+            <span class="faq-icon">🌸</span>
+            <span>対人コンテンツが全くの初心者でも大丈夫？</span>
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-a">
+            <p>もちろん大丈夫！対人0から丁寧に教えてあげるよ✨カスタムソラレや練習会もあるし、拠点戦・青戦も緩い雰囲気でやってるから安心してね。</p>
+          </div>
+        </div>
+
+        <div class="faq-item reveal-item">
+          <button class="faq-q" aria-expanded="false">
+            <span class="faq-icon">🌸</span>
+            <span>仕事が忙しくてあまりログインできないけど大丈夫？</span>
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-a">
+            <p>社会人プレイヤーも多いからリアルが忙しいのは全然わかるよ！ただ1ヶ月以上ログインなしは脱退対象になることがあるから、長期休みの場合はDiscordに一言連絡してね🌸</p>
+          </div>
+        </div>
+
+        <div class="faq-item reveal-item">
+          <button class="faq-q" aria-expanded="false">
+            <span class="faq-icon">🌸</span>
+            <span>Discordは必須？</span>
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-a">
+            <p>必須ではないけどできれば入ってほしいな！SS共有や全体向けの告知などはDiscordで行うこともあるよ。DiscordのID「xxuxxy」に連絡してくれればサーバーに招待するよ🌸</p>
+          </div>
+        </div>
+
+        <div class="faq-item reveal-item">
+          <button class="faq-q" aria-expanded="false">
+            <span class="faq-icon">🌸</span>
+            <span>加入するにはどうすればいい？</span>
+            <span class="faq-arrow">▼</span>
+          </button>
+          <div class="faq-a">
+            <p>Discordのxxuxxyに連絡するか、ゲーム内でギルドマスターか副マスターに直接話しかけてね！ゲーム内でギルド名「COUNTRY」で検索しても見つかるよ🌸気軽に来てね！</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CTA -->
+      <div class="rules-cta reveal-item">
+        <div class="rules-cta-inner">
+          <canvas id="rules-cta-canvas" width="800" height="160"></canvas>
+          <div class="rules-cta-content">
+            <h3>ルールを守って一緒に楽しもう！🌸</h3>
+            <p>気になることがあれば何でも聞いてね！ギルドチャットでもDiscordでも答えるよ！</p>
+            <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem;">
+              <a href="https://discord.com/users/xxuxxy" target="_blank" class="btn btn-primary">💬 Discordで申請</a>
+              <a href="index.html#join" class="btn btn-secondary" style="color:#E391B1;border-color:rgba(227,145,177,0.4);">加入ページへ</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer id="footer">
+    <div class="footer-top-deco"></div>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="footer-logo"><span>✦</span> COUNTRY <span>✦</span></div>
+          <p class="footer-tagline">黒い砂漠 冒険者ギルド</p>
+        </div>
+        <div class="footer-links">
+          <a href="index.html">ホーム</a>
+          <a href="gallery.html">ギャラリー</a>
+          <a href="schedule.html">スケジュール</a>
+          <a href="rules.html">ルール</a>
+          <a href="index.html#join">加入する</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 COUNTRY Guild. All rights reserved.</p>
+        <p class="footer-disclaimer">「黒い砂漠」はPEARL ABYSS社の登録商標です。本サイトは非公式のファンサイトです。</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="images.js"></script>
+  <script src="common.js"></script>
+  <script src="rules.js"></script>
+</body>
+</html>
