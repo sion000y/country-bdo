@@ -113,6 +113,8 @@ body {
 .nav-links a:hover::after { width: 100%; }
 
 .nav-toggle {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   display: none;
   flex-direction: column;
   gap: 5px;

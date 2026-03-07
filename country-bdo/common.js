@@ -6,30 +6,32 @@
 (function () {
   'use strict';
 
-  /* ── Nav scroll ────────────────────────────────────────── */
-  const navbar = document.getElementById('navbar');
-  const navToggle = document.getElementById('nav-toggle');
-  const navMobile = document.getElementById('nav-mobile');
+  /* ── Nav scroll & hamburger (sub-pages) ────────────────── */
+  document.addEventListener('DOMContentLoaded', () => {
+    const navbar    = document.getElementById('navbar');
+    const navToggle = document.getElementById('nav-toggle');
+    const navMobile = document.getElementById('nav-mobile');
 
-  if (navbar) {
-    window.addEventListener('scroll', () => {
-      navbar.classList.toggle('scrolled', window.scrollY > 40);
-    }, { passive: true });
-  }
-  if (navToggle && navMobile) {
-    navToggle.addEventListener('click', () => navMobile.classList.toggle('open'));
-    navMobile.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => navMobile.classList.remove('open'));
-    });
-  }
+    if (navbar) {
+      window.addEventListener('scroll', () => {
+        navbar.classList.toggle('scrolled', window.scrollY > 40);
+      }, { passive: true });
+    }
+    if (navToggle && navMobile) {
+      navToggle.addEventListener('click', () => navMobile.classList.toggle('open'));
+      navMobile.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => navMobile.classList.remove('open'));
+      });
+    }
 
-  /* ── Smooth anchor scroll ──────────────────────────────── */
-  document.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener('click', e => {
-      const target = document.querySelector(link.getAttribute('href'));
-      if (!target) return;
-      e.preventDefault();
-      window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 72, behavior: 'smooth' });
+    /* ── Smooth anchor scroll ────────────────────────────── */
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', e => {
+        const target = document.querySelector(link.getAttribute('href'));
+        if (!target) return;
+        e.preventDefault();
+        window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 72, behavior: 'smooth' });
+      });
     });
   });
 
