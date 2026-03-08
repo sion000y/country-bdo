@@ -1128,7 +1128,15 @@ footer {
   position: absolute;
   inset: 0;
 }
-.gp-item { position: relative; }
+
+/* gp-item に高さを明示して画像が正しく表示されるよう修正 */
+.gp-large {
+  height: 420px;
+}
+.gp-side .gp-item {
+  height: 195px;
+}
+
 .gp-canvas.gp-fallback {
   width: 100%;
   height: 100%;
@@ -1138,6 +1146,11 @@ footer {
 .gp-item:not(:has(img[src]:not([src=""]))) .gp-canvas.gp-fallback,
 .gp-item .gp-canvas.gp-fallback[style*="flex"] {
   display: block;
+}
+
+@media (max-width: 800px) {
+  .gp-large { height: 260px; }
+  .gp-side .gp-item { height: 160px; }
 }
 
 @media (max-width: 900px) {
