@@ -577,67 +577,187 @@ window.BDOImages = (function () {
 
   /* 8. GUILD BANNER — emblematic scene */
   const banner = makeScene((ctx, W, H, t) => {
-    const bg = ctx.createLinearGradient(0,0,W,H);
-    bg.addColorStop(0,'#1a0828'); bg.addColorStop(0.5,'#2d1045'); bg.addColorStop(1,'#1a0828');
-    ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
+    const cx = W / 2, cy = H / 2;
 
-    // Geometric mandala-like background
-    ctx.save(); ctx.translate(W/2,H/2);
-    for (let ring=1;ring<=4;ring++) {
-      const r=ring*Math.min(W,H)*0.11;
-      ctx.strokeStyle=hex(ring%2?P.pink:P.blue,0.06+0.03*Math.sin(t+ring));
-      ctx.lineWidth=1;
-      ctx.beginPath(); ctx.arc(0,0,r,0,Math.PI*2); ctx.stroke();
-      // radial lines
-      for (let seg=0;seg<ring*6;seg++) {
-        const a=(Math.PI*2/ring/6)*seg + t*0.05*(ring%2?1:-1);
-        ctx.strokeStyle=hex(seg%2?P.pink:P.blue,0.04);
-        ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r); ctx.stroke();
+    /* ── 背景 ── */
+    const bg = ctx.createLinearGradient(0, 0, W, H);
+    bg.addColorStop(0,   '#1a0520');
+    bg.addColorStop(0.5, '#2e0d35');
+    bg.addColorStop(1,   '#160318');
+    ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+
+    /* 背景グロー */
+    const bgGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, H * 0.75);
+    bgGlow.addColorStop(0, `rgba(200,80,140,${0.1 + 0.04 * Math.sin(t)})`);
+    bgGlow.addColorStop(1, 'rgba(100,20,80,0)');
+    ctx.fillStyle = bgGlow; ctx.fillRect(0, 0, W, H);
+
+    /* ── 角丸ポリゴンヘルパー ── */
+    function roundedPoly(points, r) {
+      ctx.beginPath();
+      for (let i = 0; i < points.length; i++) {
+        const prev = points[(i - 1 + points.length) % points.length];
+        const curr = points[i];
+        const next = points[(i + 1) % points.length];
+        const d1x = curr.x - prev.x, d1y = curr.y - prev.y;
+        const d2x = next.x - curr.x, d2y = next.y - curr.y;
+        const len1 = Math.hypot(d1x, d1y), len2 = Math.hypot(d2x, d2y);
+        const rc = Math.min(r, len1 / 2, len2 / 2);
+        const t1x = curr.x - (d1x / len1) * rc, t1y = curr.y - (d1y / len1) * rc;
+        const t2x = curr.x + (d2x / len2) * rc, t2y = curr.y + (d2y / len2) * rc;
+        if (i === 0) ctx.moveTo(t1x, t1y); else ctx.lineTo(t1x, t1y);
+        ctx.quadraticCurveTo(curr.x, curr.y, t2x, t2y);
       }
+      ctx.closePath();
+    }
+
+    /* ── 幾何学花びら関数（角丸版） ── */
+    function geoPetal(x, y, w, h, rot, alpha, c1, c2) {
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.translate(x, y); ctx.rotate(rot);
+      const g = ctx.createLinearGradient(0, -h, 0, h);
+      g.addColorStop(0,   c1);
+      g.addColorStop(0.5, c2);
+      g.addColorStop(1,   c1);
+      ctx.fillStyle   = g;
+      ctx.shadowColor = 'rgba(220,100,150,0.5)';
+      ctx.shadowBlur  = 20;
+      const pts = [
+        { x:  0,        y: -h        },
+        { x:  w * 0.28, y: -h * 0.28 },
+        { x:  w,        y:  0        },
+        { x:  w * 0.28, y:  h * 0.28 },
+        { x:  0,        y:  h        },
+        { x: -w * 0.28, y:  h * 0.28 },
+        { x: -w,        y:  0        },
+        { x: -w * 0.28, y: -h * 0.28 },
+      ];
+      roundedPoly(pts, w * 0.55);
+      ctx.fill();
+      ctx.shadowBlur  = 0;
+      ctx.strokeStyle = 'rgba(255,255,255,0.28)';
+      ctx.lineWidth   = 1.2;
+      ctx.beginPath(); ctx.moveTo(0, -h * 0.85); ctx.lineTo(0,  h * 0.85); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(-w * 0.75, 0);  ctx.lineTo(w * 0.75, 0);  ctx.stroke();
+      ctx.restore();
+    }
+
+    /* ── 幾何学花芯（角丸六角形） ── */
+    function geoCentral(x, y, r, rot, alpha) {
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.translate(x, y); ctx.rotate(rot);
+      const hexPts = Array.from({ length: 6 }, (_, i) => {
+        const a = (Math.PI / 3) * i - Math.PI / 6;
+        return { x: Math.cos(a) * r, y: Math.sin(a) * r };
+      });
+      roundedPoly(hexPts, r * 0.3);
+      const cg = ctx.createRadialGradient(0, 0, 0, 0, 0, r);
+      cg.addColorStop(0, '#fff8e0'); cg.addColorStop(0.5, '#f8d060'); cg.addColorStop(1, 'rgba(240,160,40,0)');
+      ctx.fillStyle   = cg;
+      ctx.shadowColor = 'rgba(255,210,60,1)';
+      ctx.shadowBlur  = 36;
+      ctx.fill();
+      ctx.shadowBlur  = 0;
+      ctx.strokeStyle = 'rgba(255,230,100,0.55)';
+      ctx.lineWidth   = 1.2;
+      const hexPts2 = Array.from({ length: 6 }, (_, i) => {
+        const a = (Math.PI / 3) * i - Math.PI / 6;
+        return { x: Math.cos(a) * r * 0.54, y: Math.sin(a) * r * 0.54 };
+      });
+      roundedPoly(hexPts2, r * 0.18);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    /* ── 外周リング（呼吸） ── */
+    const pulse = 0.45 + 0.2 * Math.sin(t * 1.2);
+    [H * 0.44, H * 0.47].forEach((r, i) => {
+      ctx.save();
+      ctx.strokeStyle = i === 0 ? `rgba(227,145,177,${pulse})` : 'rgba(227,145,177,0.15)';
+      ctx.lineWidth   = i === 0 ? 2 : 0.8;
+      if (i === 1) ctx.setLineDash([5, 8]);
+      ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
+      ctx.restore();
+    });
+
+    /* ── 放射線（幾何学装飾） ── */
+    ctx.save(); ctx.translate(cx, cy); ctx.rotate(t * 0.06);
+    for (let i = 0; i < 12; i++) {
+      const a   = (Math.PI * 2 / 12) * i;
+      const alp = 0.08 + 0.05 * Math.sin(t * 1.5 + i);
+      ctx.strokeStyle = `rgba(227,145,177,${alp})`;
+      ctx.lineWidth   = 0.8;
+      ctx.beginPath();
+      ctx.moveTo(Math.cos(a) * H * 0.12, Math.sin(a) * H * 0.12);
+      ctx.lineTo(Math.cos(a) * H * 0.43, Math.sin(a) * H * 0.43);
+      ctx.stroke();
     }
     ctx.restore();
 
-    // Central large crest (shield)
-    ctx.save(); ctx.translate(W/2,H/2-H*0.04);
-    const sh=H*0.28, sw=H*0.22;
+    /* ── 内側グロー ── */
+    const glow = ctx.createRadialGradient(cx, cy, 0, cx, cy, H * 0.28);
+    glow.addColorStop(0, `rgba(255,200,225,${0.24 + 0.08 * Math.sin(t * 1.5)})`);
+    glow.addColorStop(1, 'rgba(200,80,140,0)');
+    ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(cx, cy, H * 0.28, 0, Math.PI * 2); ctx.fill();
+
+    /* ── メイン幾何学桜1輪 ── */
+    const pd = H * 0.155, pw = H * 0.065, ph = H * 0.135;
+    const br = t * 0.12 - Math.PI / 2;
+    for (let i = 0; i < 5; i++) {
+      const a  = br + (Math.PI * 2 / 5) * i;
+      geoPetal(cx + Math.cos(a) * pd, cy + Math.sin(a) * pd,
+               pw, ph, a + Math.PI / 2, 0.94, '#fde0ee', '#d95090');
+    }
+    /* 花びらの間のダイヤ */
+    for (let i = 0; i < 5; i++) {
+      const a  = br + (Math.PI * 2 / 5) * i + Math.PI / 5;
+      const alp = 0.4 + 0.15 * Math.sin(t * 2 + i);
+      const dx = cx + Math.cos(a) * (pd + ph * 0.55);
+      const dy = cy + Math.sin(a) * (pd + ph * 0.55);
+      ctx.save();
+      ctx.globalAlpha = alp;
+      ctx.translate(dx, dy); ctx.rotate(a + Math.PI / 4);
+      ctx.fillStyle   = '#f5a8c8';
+      ctx.shadowColor = 'rgba(220,100,150,0.5)';
+      ctx.shadowBlur  = 10;
+      const ds = H * 0.018;
+      const dpts = [{x:0,y:-ds},{x:ds,y:0},{x:0,y:ds},{x:-ds,y:0}];
+      roundedPoly(dpts, ds * 0.4);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    /* ── 花芯 ── */
+    geoCentral(cx, cy, H * 0.055, t * 0.22, 1);
+
+    /* ── テキスト ── */
+    ctx.save();
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    const fs = Math.round(H * 0.13);
+    ctx.font      = `bold ${fs}px 'Cinzel Decorative', serif`;
+    ctx.fillStyle = 'rgba(80,10,50,0.8)';
+    ctx.fillText('COUNTRY', cx + 2, cy + H * 0.3 + 2);
+    ctx.fillStyle   = '#ffffff';
+    ctx.shadowColor = 'rgba(247,145,177,1)';
+    ctx.shadowBlur  = 22;
+    ctx.fillText('COUNTRY', cx, cy + H * 0.3);
+    ctx.font        = `${Math.round(H * 0.055)}px 'Cinzel', serif`;
+    ctx.fillStyle   = 'rgba(247,194,216,0.85)';
+    ctx.shadowBlur  = 10;
+    ctx.fillText('Since 2021.03.22', cx, cy + H * 0.41);
+    ctx.shadowBlur  = 0;
+    const lw = W * 0.18;
+    const lg = ctx.createLinearGradient(cx - lw, 0, cx + lw, 0);
+    lg.addColorStop(0, 'rgba(227,145,177,0)');
+    lg.addColorStop(0.5, 'rgba(227,145,177,0.85)');
+    lg.addColorStop(1, 'rgba(227,145,177,0)');
+    ctx.strokeStyle = lg; ctx.lineWidth = 1.5;
     ctx.beginPath();
-    ctx.moveTo(0,-sh/2);
-    ctx.lineTo(sw/2,-sh/4);
-    ctx.lineTo(sw/2,sh/6);
-    ctx.quadraticCurveTo(sw/2,sh/2,0,sh/2+10);
-    ctx.quadraticCurveTo(-sw/2,sh/2,-sw/2,sh/6);
-    ctx.lineTo(-sw/2,-sh/4);
-    ctx.closePath();
-    const sg=ctx.createLinearGradient(0,-sh/2,0,sh/2);
-    sg.addColorStop(0,hex(P.pink,0.7+0.1*Math.sin(t)));
-    sg.addColorStop(0.5,hex(P.pinkDark,0.8));
-    sg.addColorStop(1,hex('#4a1028',0.9));
-    ctx.fillStyle=sg; ctx.fill();
-    ctx.strokeStyle=hex(P.goldL,0.7); ctx.lineWidth=2; ctx.stroke();
-    // COUNTRY text on shield
-    ctx.font=`bold ${H*0.06}px 'Cinzel Decorative',serif`;
-    ctx.fillStyle=hex(P.white,0.95);
-    ctx.textAlign='center'; ctx.textBaseline='middle';
-    ctx.fillText('COUNTRY',0,H*0.02);
-    ctx.font=`${H*0.03}px 'Cinzel',serif`;
-    ctx.fillStyle=hex(P.goldL,0.8);
-    ctx.fillText('Since 2021',0,H*0.1);
+    ctx.moveTo(cx - lw, cy + H * 0.355); ctx.lineTo(cx + lw, cy + H * 0.355);
+    ctx.stroke();
     ctx.restore();
-
-    // Floating runes
-    'ᚠᚢᚦᚨᚱᚲᚷᚹ'.split('').forEach((r,i) => {
-      const a=(Math.PI*2/8)*i+t*0.2;
-      const radius=Math.min(W,H)*0.38;
-      const rx=W/2+Math.cos(a)*radius, ry=H/2+Math.sin(a)*radius;
-      ctx.font=`14px serif`;
-      ctx.fillStyle=hex(P.pink,0.3+0.15*Math.sin(t*0.8+i));
-      ctx.textAlign='center'; ctx.textBaseline='middle';
-      ctx.fillText(r,rx,ry);
-    });
-
-    ctx.font=`${W*0.022}px 'Cinzel Decorative',serif`;
-    ctx.fillStyle='rgba(227,145,177,0.18)'; ctx.textAlign='right';
-    ctx.fillText('COUNTRY Guild', W-16, H-14);
   });
 
   /* ── Public API ─────────────────────────────────────────── */

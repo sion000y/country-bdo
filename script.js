@@ -98,147 +98,204 @@
     const ctx = canvas.getContext('2d');
     const W = canvas.width, H = canvas.height;
     const cx = W / 2, cy = H / 2;
+    let t = 0;
 
-    let angle = 0;
-
-    function drawStar(x, y, points, outer, inner, color, alpha, rot = 0) {
-      ctx.save();
-      ctx.globalAlpha = alpha;
-      ctx.fillStyle = color;
+    /* ── 角丸ポリゴン描画ヘルパー ──
+         points: [{x,y}] の配列、r: 角丸半径 ── */
+    function roundedPoly(points, r) {
       ctx.beginPath();
-      for (let i = 0; i < points * 2; i++) {
-        const r = i % 2 === 0 ? outer : inner;
-        const a = (Math.PI / points) * i + rot;
-        const px = x + Math.cos(a) * r;
-        const py = y + Math.sin(a) * r;
-        i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+      for (let i = 0; i < points.length; i++) {
+        const prev = points[(i - 1 + points.length) % points.length];
+        const curr = points[i];
+        const next = points[(i + 1) % points.length];
+        const d1x = curr.x - prev.x, d1y = curr.y - prev.y;
+        const d2x = next.x - curr.x, d2y = next.y - curr.y;
+        const len1 = Math.hypot(d1x, d1y), len2 = Math.hypot(d2x, d2y);
+        const rc = Math.min(r, len1 / 2, len2 / 2);
+        const t1x = curr.x - (d1x / len1) * rc, t1y = curr.y - (d1y / len1) * rc;
+        const t2x = curr.x + (d2x / len2) * rc, t2y = curr.y + (d2y / len2) * rc;
+        if (i === 0) ctx.moveTo(t1x, t1y); else ctx.lineTo(t1x, t1y);
+        ctx.quadraticCurveTo(curr.x, curr.y, t2x, t2y);
       }
       ctx.closePath();
+    }
+
+    /* ── 幾何学的な花びら1枚（角丸版） ── */
+    function geoPetal(x, y, w, h, rot, alpha, c1, c2) {
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.translate(x, y);
+      ctx.rotate(rot);
+      const g = ctx.createLinearGradient(0, -h, 0, h);
+      g.addColorStop(0,   c1);
+      g.addColorStop(0.5, c2);
+      g.addColorStop(1,   c1);
+      ctx.fillStyle   = g;
+      ctx.shadowColor = 'rgba(220,100,150,0.6)';
+      ctx.shadowBlur  = 14;
+      const pts = [
+        { x:  0,         y: -h        },
+        { x:  w * 0.28,  y: -h * 0.28 },
+        { x:  w,         y:  0        },
+        { x:  w * 0.28,  y:  h * 0.28 },
+        { x:  0,         y:  h        },
+        { x: -w * 0.28,  y:  h * 0.28 },
+        { x: -w,         y:  0        },
+        { x: -w * 0.28,  y: -h * 0.28 },
+      ];
+      roundedPoly(pts, w * 0.55);
       ctx.fill();
+      /* 中心筋 */
+      ctx.shadowBlur  = 0;
+      ctx.strokeStyle = 'rgba(255,255,255,0.25)';
+      ctx.lineWidth   = 0.8;
+      ctx.beginPath(); ctx.moveTo(0, -h * 0.85); ctx.lineTo(0,  h * 0.85); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(-w * 0.75, 0);  ctx.lineTo(w * 0.75, 0);  ctx.stroke();
+      ctx.restore();
+    }
+
+    /* ── 幾何学的な花芯：角丸六角形 ── */
+    function geoCentral(x, y, r, rot, alpha) {
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.translate(x, y);
+      ctx.rotate(rot);
+      /* 外側角丸六角形 */
+      const hexPts = Array.from({ length: 6 }, (_, i) => {
+        const a = (Math.PI / 3) * i - Math.PI / 6;
+        return { x: Math.cos(a) * r, y: Math.sin(a) * r };
+      });
+      roundedPoly(hexPts, r * 0.3);
+      const hg = ctx.createRadialGradient(0, 0, 0, 0, 0, r);
+      hg.addColorStop(0,   '#fff8e0');
+      hg.addColorStop(0.5, '#f8d060');
+      hg.addColorStop(1,   'rgba(240,160,40,0)');
+      ctx.fillStyle   = hg;
+      ctx.shadowColor = 'rgba(255,200,60,0.9)';
+      ctx.shadowBlur  = 24;
+      ctx.fill();
+      /* 内側角丸六角形（アウトライン） */
+      ctx.shadowBlur  = 0;
+      ctx.strokeStyle = 'rgba(255,230,100,0.6)';
+      ctx.lineWidth   = 1;
+      const hexPts2 = Array.from({ length: 6 }, (_, i) => {
+        const a = (Math.PI / 3) * i - Math.PI / 6;
+        return { x: Math.cos(a) * r * 0.55, y: Math.sin(a) * r * 0.55 };
+      });
+      roundedPoly(hexPts2, r * 0.18);
+      ctx.stroke();
       ctx.restore();
     }
 
     function frame() {
       ctx.clearRect(0, 0, W, H);
 
-      // Background circle
-      const bgGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, W / 2);
-      bgGrad.addColorStop(0, hex('#4a1a50', 1));
-      bgGrad.addColorStop(0.5, hex('#2d0f38', 1));
-      bgGrad.addColorStop(1, hex('#160820', 1));
-      ctx.fillStyle = bgGrad;
-      ctx.beginPath();
-      ctx.arc(cx, cy, W / 2, 0, Math.PI * 2);
-      ctx.fill();
+      /* ── 背景 ── */
+      const bg = ctx.createRadialGradient(cx, cy, 0, cx, cy, W * 0.52);
+      bg.addColorStop(0,   '#3b1040');
+      bg.addColorStop(0.6, '#210830');
+      bg.addColorStop(1,   '#0f0418');
+      ctx.fillStyle = bg;
+      ctx.beginPath(); ctx.arc(cx, cy, W * 0.52, 0, Math.PI * 2); ctx.fill();
 
-      // Outer ring
+      /* ── 外周：二重の幾何学リング ── */
+      const pulse = 0.5 + 0.2 * Math.sin(t * 1.2);
+      /* 外側点線 */
       ctx.save();
-      ctx.strokeStyle = hex(C.pink, 0.35);
-      ctx.lineWidth = 1;
+      ctx.strokeStyle = 'rgba(227,145,177,0.18)';
+      ctx.lineWidth   = 0.8;
       ctx.setLineDash([4, 6]);
-      ctx.beginPath();
-      ctx.arc(cx, cy, W / 2 - 16, 0, Math.PI * 2);
-      ctx.stroke();
+      ctx.beginPath(); ctx.arc(cx, cy, W * 0.49, 0, Math.PI * 2); ctx.stroke();
+      ctx.restore();
+      /* 内側実線 */
+      ctx.save();
+      ctx.strokeStyle = `rgba(227,145,177,${pulse})`;
+      ctx.lineWidth   = 1.5;
+      ctx.beginPath(); ctx.arc(cx, cy, W * 0.45, 0, Math.PI * 2); ctx.stroke();
       ctx.restore();
 
-      // Rotating rune ring
+      /* ── 外周に12本の放射線（幾何学装飾） ── */
       ctx.save();
       ctx.translate(cx, cy);
-      ctx.rotate(angle);
-      const runeR = W / 2 - 30;
-      const count = 12;
-      for (let i = 0; i < count; i++) {
-        const a = (Math.PI * 2 / count) * i;
-        const rx = Math.cos(a) * runeR;
-        const ry = Math.sin(a) * runeR;
-        ctx.save();
-        ctx.translate(rx, ry);
-        ctx.rotate(a + Math.PI / 2);
-        ctx.font = '11px serif';
-        ctx.fillStyle = hex(C.pink, 0.4 + 0.2 * Math.sin(angle * 2 + i));
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(['✦', '◆', '✧', '◇'][i % 4], 0, 0);
-        ctx.restore();
+      ctx.rotate(t * 0.08);
+      for (let i = 0; i < 12; i++) {
+        const a   = (Math.PI * 2 / 12) * i;
+        const alp = 0.12 + 0.06 * Math.sin(t * 1.5 + i);
+        ctx.strokeStyle = `rgba(227,145,177,${alp})`;
+        ctx.lineWidth   = 0.8;
+        ctx.beginPath();
+        ctx.moveTo(Math.cos(a) * 78, Math.sin(a) * 78);
+        ctx.lineTo(Math.cos(a) * W * 0.44, Math.sin(a) * W * 0.44);
+        ctx.stroke();
       }
       ctx.restore();
 
-      // Inner circle
-      const innerGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 80);
-      innerGrad.addColorStop(0, hex(C.blue, 0.6));
-      innerGrad.addColorStop(1, hex(C.blue, 0));
-      ctx.fillStyle = innerGrad;
-      ctx.beginPath();
-      ctx.arc(cx, cy, 80, 0, Math.PI * 2);
-      ctx.fill();
+      /* ── 内側グロー ── */
+      const glow = ctx.createRadialGradient(cx, cy, 0, cx, cy, 88);
+      glow.addColorStop(0, `rgba(247,180,210,${0.2 + 0.08 * Math.sin(t)})`);
+      glow.addColorStop(1, 'rgba(200,80,140,0)');
+      ctx.fillStyle = glow;
+      ctx.beginPath(); ctx.arc(cx, cy, 88, 0, Math.PI * 2); ctx.fill();
 
-      // Rotating stars
+      /* ── メイン：幾何学桜 5枚花びら ── */
+      const petalDist = 46;
+      const pw = 22, ph = 44;
+      const baseRot = t * 0.15;
+      for (let i = 0; i < 5; i++) {
+        const a  = baseRot + (Math.PI * 2 / 5) * i - Math.PI / 2;
+        const px = cx + Math.cos(a) * petalDist;
+        const py = cy + Math.sin(a) * petalDist;
+        geoPetal(px, py, pw, ph, a + Math.PI / 2,
+                 0.93, '#fde0ee', '#d95090');
+      }
+
+      /* ── 花びらの間に小さなダイヤ形 ── */
+      for (let i = 0; i < 5; i++) {
+        const a  = baseRot + (Math.PI * 2 / 5) * i - Math.PI / 2 + Math.PI / 5;
+        const px = cx + Math.cos(a) * 72;
+        const py = cy + Math.sin(a) * 72;
+        ctx.save();
+        ctx.globalAlpha = 0.45 + 0.15 * Math.sin(t * 2 + i);
+        ctx.translate(px, py); ctx.rotate(a + Math.PI / 4);
+        ctx.fillStyle = '#f5a8c8';
+        ctx.shadowColor = 'rgba(220,100,150,0.5)';
+        ctx.shadowBlur  = 8;
+        const dpts = [{x:0,y:-7},{x:5,y:0},{x:0,y:7},{x:-5,y:0}];
+        roundedPoly(dpts, 2.5);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      /* ── 花芯：幾何学的六角形 ── */
+      geoCentral(cx, cy, 17, t * 0.25, 1);
+
+      /* ── COUNTRY テキスト ── */
       ctx.save();
-      ctx.translate(cx, cy);
-      ctx.rotate(-angle * 0.7);
-      drawStar(0, 0, 6, 65, 28, C.pink, 0.18);
-      ctx.restore();
-
-      ctx.save();
-      ctx.translate(cx, cy);
-      ctx.rotate(angle * 0.5);
-      drawStar(0, 0, 8, 72, 55, C.pink, 0.1);
-      ctx.restore();
-
-      // Main emblem - shield
-      ctx.save();
-      ctx.translate(cx, cy - 4);
-      const sh = 70, sw = 52;
-      ctx.beginPath();
-      ctx.moveTo(0, -sh / 2);
-      ctx.lineTo(sw / 2, -sh / 4);
-      ctx.lineTo(sw / 2, sh / 5);
-      ctx.quadraticCurveTo(sw / 2, sh / 2, 0, sh / 2 + 6);
-      ctx.quadraticCurveTo(-sw / 2, sh / 2, -sw / 2, sh / 5);
-      ctx.lineTo(-sw / 2, -sh / 4);
-      ctx.closePath();
-
-      const shGrad = ctx.createLinearGradient(0, -sh / 2, 0, sh / 2);
-      shGrad.addColorStop(0, hex(C.blueLight, 0.9));
-      shGrad.addColorStop(0.5, hex(C.blue, 0.8));
-      shGrad.addColorStop(1, hex(C.blueDark, 0.9));
-      ctx.fillStyle = shGrad;
-      ctx.fill();
-
-      ctx.strokeStyle = hex(C.pink, 0.7);
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
-
-      // Shield detail line
-      ctx.beginPath();
-      ctx.moveTo(0, -sh / 2 + 6);
-      ctx.lineTo(0, sh / 2 + 2);
-      ctx.strokeStyle = hex(C.white, 0.15);
-      ctx.lineWidth = 1;
-      ctx.stroke();
-
-      ctx.restore();
-
-      // Guild text
-      ctx.save();
-      ctx.font = `bold 14px 'Cinzel Decorative', serif`;
-      ctx.fillStyle = hex(C.white, 0.9);
-      ctx.textAlign = 'center';
+      ctx.textAlign    = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText('COUNTRY', cx, cy);
+      ctx.font         = `bold 21px 'Cinzel Decorative', serif`;
+      /* 影 */
+      ctx.fillStyle = 'rgba(80,10,50,0.75)';
+      ctx.fillText('COUNTRY', cx + 1.5, cy + 108 + 1.5);
+      /* 本文 */
+      ctx.fillStyle   = '#ffffff';
+      ctx.shadowColor = 'rgba(247,145,177,1)';
+      ctx.shadowBlur  = 16;
+      ctx.fillText('COUNTRY', cx, cy + 108);
+      /* アンダーライン */
+      ctx.shadowBlur  = 0;
+      const ulW  = 84;
+      const ulGr = ctx.createLinearGradient(cx - ulW, 0, cx + ulW, 0);
+      ulGr.addColorStop(0,   'rgba(227,145,177,0)');
+      ulGr.addColorStop(0.5, 'rgba(227,145,177,0.85)');
+      ulGr.addColorStop(1,   'rgba(227,145,177,0)');
+      ctx.strokeStyle = ulGr; ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(cx - ulW, cy + 118); ctx.lineTo(cx + ulW, cy + 118);
+      ctx.stroke();
       ctx.restore();
 
-      // Pulsing aura
-      const pulse = 0.4 + 0.15 * Math.sin(angle * 1.5);
-      const aura = ctx.createRadialGradient(cx, cy, 30, cx, cy, 100);
-      aura.addColorStop(0, hex(C.blue, pulse * 0.3));
-      aura.addColorStop(1, hex(C.blue, 0));
-      ctx.fillStyle = aura;
-      ctx.beginPath();
-      ctx.arc(cx, cy, 100, 0, Math.PI * 2);
-      ctx.fill();
-
-      angle += 0.006;
+      t += 0.022;
       requestAnimationFrame(frame);
     }
 
