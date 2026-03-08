@@ -43,16 +43,27 @@
 
   /* ── Expand / Modal ─────────────────────────────────────── */
   function initExpandButtons() {
+    // Canvas scene expand
     document.querySelectorAll('.gallery-expand').forEach(btn => {
       btn.addEventListener('click', e => {
         e.stopPropagation();
         const scene = btn.dataset.scene;
         const caption = btn.dataset.caption || '';
         if (!scene || !BDOImages.scenes[scene]) return;
-
         window.openModal(canvas => {
           BDOImages.scenes[scene](canvas);
         }, caption);
+      });
+    });
+
+    // Real image expand
+    document.querySelectorAll('.gallery-expand-img').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        const src = btn.dataset.src;
+        const caption = btn.dataset.caption || '';
+        if (!src) return;
+        openImgModal(src, caption);
       });
     });
 
@@ -68,10 +79,40 @@
     // Click on gallery items (not the expand button)
     document.querySelectorAll('.gallery-item').forEach(item => {
       item.addEventListener('click', () => {
-        const btn = item.querySelector('.gallery-expand');
+        const btn = item.querySelector('.gallery-expand, .gallery-expand-img');
         if (btn) btn.click();
       });
     });
+  }
+
+  /* ── Real image modal ────────────────────────────────────── */
+  function openImgModal(src, caption) {
+    let overlay = document.getElementById('img-modal-overlay');
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.id = 'img-modal-overlay';
+      overlay.style.cssText = `
+        position:fixed;inset:0;z-index:9999;
+        background:rgba(0,0,0,0.88);
+        display:flex;flex-direction:column;
+        align-items:center;justify-content:center;
+        cursor:pointer;padding:1.5rem;
+      `;
+      overlay.innerHTML = `
+        <img id="img-modal-img" style="max-width:90vw;max-height:78vh;object-fit:contain;border-radius:8px;box-shadow:0 0 40px rgba(227,145,177,0.3);">
+        <p id="img-modal-caption" style="color:rgba(255,255,255,0.7);font-family:var(--font-jp);margin-top:1rem;font-size:0.9rem;text-align:center;max-width:600px;"></p>
+        <button id="img-modal-close" style="position:absolute;top:1.5rem;right:2rem;background:none;border:none;color:rgba(255,255,255,0.6);font-size:2rem;cursor:pointer;">×</button>
+      `;
+      document.body.appendChild(overlay);
+      overlay.addEventListener('click', e => {
+        if (e.target === overlay || e.target.id === 'img-modal-close') {
+          overlay.style.display = 'none';
+        }
+      });
+    }
+    overlay.querySelector('#img-modal-img').src = src;
+    overlay.querySelector('#img-modal-caption').textContent = caption;
+    overlay.style.display = 'flex';
   }
 
   /* ── Scroll reveal for gallery items ───────────────────── */

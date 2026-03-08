@@ -69,7 +69,7 @@
         <button class="filter-tab" data-filter="landscape">風景</button>
         <button class="filter-tab" data-filter="battle">バトル</button>
         <button class="filter-tab" data-filter="guild">ギルド活動</button>
-        <button class="filter-tab" data-filter="seasonal">季節イベント</button>
+        <button class="filter-tab" data-filter="seasonal">ギルドイベント</button>
       </div>
     </div>
   </div>
@@ -98,32 +98,31 @@
 
         <!-- ==============================================
              ▼ ギャラリー画像①【風景】
-             実際の画像に差し替える場合:
-               data-img-src="images/your-photo.jpg" を追加
-               またはcanvasのdata-scene属性を削除してimgタグを使用
+             画像: Images/Landscape/landscape1.jpg
              ============================================== -->
         <div class="gallery-item reveal-item" data-filter-tag="landscape">
-          <canvas class="gallery-canvas" width="600" height="340" data-scene="heidel"></canvas>
+          <img class="gallery-img" src="Images/Landscape/landscape1.jpg" alt="桜の木の下で集合">
           <div class="gallery-overlay">
             <div class="gallery-info">
-              <span class="gallery-tag">🌙 風景</span>
-              <h3>ハイデル郊外の夜</h3>
+              <span class="gallery-tag">🌸 風景</span>
+              <h3>桜の木の下で</h3>
             </div>
-            <button class="gallery-expand" data-scene="heidel" data-caption="ハイデル郊外。蛍が舞う静かな夜道を冒険者たちが歩く。">🔍</button>
+            <button class="gallery-expand-img" data-src="Images/Landscape/landscape1.jpg" data-caption="春の桜が咲く中、みんなで集合写真🌸のんびりした時間が最高！">🔍</button>
           </div>
         </div>
 
         <!-- ==============================================
              ▼ ギャラリー画像②【ギルド活動】
+             画像: Images/Concert/concert1.jpg
              ============================================== -->
         <div class="gallery-item reveal-item" data-filter-tag="guild">
-          <canvas class="gallery-canvas" width="600" height="340" data-scene="partyScene"></canvas>
+          <img class="gallery-img" src="Images/Concert/concert1.jpg" alt="コンサート集会①">
           <div class="gallery-overlay">
             <div class="gallery-info">
-              <span class="gallery-tag">🔥 ギルド活動</span>
-              <h3>焚き火パーティー集会</h3>
+              <span class="gallery-tag">🎵 ギルド活動</span>
+              <h3>ギルドコンサート</h3>
             </div>
-            <button class="gallery-expand" data-scene="partyScene" data-caption="みんなで焚き火を囲んでの集会。こういう時間が大事だよね🌸">🔍</button>
+            <button class="gallery-expand-img" data-src="Images/Concert/concert1.jpg" data-caption="招待して集まってもらったみんなで楽しんだコンサートイベント🎵">🔍</button>
           </div>
         </div>
 
@@ -143,29 +142,46 @@
 
         <!-- ==============================================
              ▼ ギャラリー画像④【ギルド活動】
+             画像: Images/Concert/concert2.png
              ============================================== -->
         <div class="gallery-item reveal-item" data-filter-tag="guild">
-          <canvas class="gallery-canvas" width="600" height="340" data-scene="dungeon"></canvas>
+          <img class="gallery-img" src="Images/Concert/concert2.png" alt="コンサート集会②">
           <div class="gallery-overlay">
             <div class="gallery-info">
-              <span class="gallery-tag">💎 ギルド活動</span>
-              <h3>ダンジョン探索</h3>
+              <span class="gallery-tag">🎵 ギルド活動</span>
+              <h3>ギルドコンサート②</h3>
             </div>
-            <button class="gallery-expand" data-scene="dungeon" data-caption="パーティー祠や狩り場など、みんなで探索するダンジョン。クリスタルの輝きが幻想的！">🔍</button>
+            <button class="gallery-expand-img" data-src="Images/Concert/concert2.png" data-caption="幻想的な照明の中で行われたギルドコンサート✨みんなで盛り上がった！">🔍</button>
           </div>
         </div>
 
         <!-- ==============================================
              ▼ ギャラリー画像⑤【風景】
+             画像: Images/Landscape/landscape2.png
              ============================================== -->
         <div class="gallery-item reveal-item" data-filter-tag="landscape">
-          <canvas class="gallery-canvas" width="600" height="340" data-scene="calpheon"></canvas>
+          <img class="gallery-img" src="Images/Landscape/landscape2.png" alt="空中ドラゴンと冒険者">
           <div class="gallery-overlay">
             <div class="gallery-info">
-              <span class="gallery-tag">🏙️ 風景</span>
-              <h3>カルフェオンの夜景</h3>
+              <span class="gallery-tag">🐉 風景</span>
+              <h3>空の旅（グリフォンに運ばれながらの演奏）</h3>
             </div>
-            <button class="gallery-expand" data-scene="calpheon" data-caption="カルフェオンの幻想的な夜。石畳に灯籠の光が映る美しい夜景。">🔍</button>
+            <button class="gallery-expand-img" data-src="Images/Landscape/landscape2.png" data-caption="グリフォンに運ばれながらの空中演奏！どんな状況でも音楽は止まらない✨">🔍</button>
+          </div>
+        </div>
+
+        <!-- ==============================================
+             ▼ ギャラリー画像⑧【風景】（新規追加）
+             画像: Images/Landscape/landscape3.jpg
+             ============================================== -->
+        <div class="gallery-item reveal-item" data-filter-tag="landscape">
+          <img class="gallery-img" src="Images/Landscape/landscape3.jpg" alt="農場スタイルで集合">
+          <div class="gallery-overlay">
+            <div class="gallery-info">
+              <span class="gallery-tag">🌾 風景</span>
+              <h3>農場スタイルで集合！</h3>
+            </div>
+            <button class="gallery-expand-img" data-src="Images/Landscape/landscape3.jpg" data-caption="お揃いの麦わら帽子でポーズ！こういうノリが好き🌾">🔍</button>
           </div>
         </div>
 
@@ -185,15 +201,16 @@
 
         <!-- ==============================================
              ▼ ギャラリー画像⑦【ギルド活動】
+             画像: Images/Concert/concert3.jpg
              ============================================== -->
         <div class="gallery-item reveal-item" data-filter-tag="guild">
-          <canvas class="gallery-canvas" width="600" height="340" data-scene="partyScene"></canvas>
+          <img class="gallery-img" src="Images/Concert/concert3.jpg" alt="ギルド集合写真">
           <div class="gallery-overlay">
             <div class="gallery-info">
-              <span class="gallery-tag">🎉 ギルド活動</span>
-              <h3>レイドボス討伐後</h3>
+              <span class="gallery-tag">🌸 ギルド活動</span>
+              <h3>ギルド集合写真</h3>
             </div>
-            <button class="gallery-expand" data-scene="partyScene" data-caption="レイドボス討伐後のお祝い🎉毎週みんなで達成感を分かち合ってる！">🔍</button>
+            <button class="gallery-expand-img" data-src="Images/Concert/concert3.jpg" data-caption="COUNTRYとゲストの仲間たち！">🔍</button>
           </div>
         </div>
 
