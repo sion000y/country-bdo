@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ギャラリー | COUNTRY | 黒い砂漠 ギルド活動の記録</title>
+  <meta name="description" content="黒い砂漠（BDO）ギルド「COUNTRY」の活動ギャラリー。拠点戦・演奏会・ギルドイベント・風景など冒険の記録を公開中。">
+  <meta name="keywords" content="黒い砂漠,BDO,ギルド募集,ギルド,募集,公式,拠点戦,青戦,演奏会,ソラレの闘技場,対人コンテンツ,PTコンテンツ,COUNTRY,Country,かんちゅりー,かんとりー,黒い砂漠ギルド,BDOギルド,初心者,おすすめ,優しい,初心者向け,黒い砂漠ギルド募集">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="ギャラリー | COUNTRY | 黒い砂漠 ギルド活動">
+  <meta property="og:description" content="COUNTRYギルドの冒険の記録。演奏会・拠点戦・ギルドイベントなどの活動写真を公開中🌸">
+  <meta property="og:image" content="Images/Concert/concert3.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@fuwawan_bd">
+  <link rel="canonical" href="gallery.html">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="icon" href="icon-192.png" type="image/png" sizes="192x192">
+  <link rel="icon" href="icon-512.png" type="image/png" sizes="512x512">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/gallery.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Noto+Serif+JP:wght@300;400;600;700&family=Shippori+Mincho:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <img src="guild-logo.png" alt="COUNTRY" class="nav-logo-img">
+        <span class="logo-text">COUNTRY</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="index.html#about">ギルドについて</a></li>
+        <li><a href="index.html#activities">活動内容</a></li>
+        <li><a href="gallery.html" class="nav-active">ギャラリー</a></li>
+        <li><a href="schedule.html">スケジュール</a></li>
+        <li><a href="rules.html">ルール</a></li>
+        <li><a href="index.html#join">加入する</a></li>
+      </ul>
+      <button class="nav-toggle" id="nav-toggle" aria-label="メニュー">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="index.html#about">ギルドについて</a></li>
+        <li><a href="index.html#activities">活動内容</a></li>
+        <li><a href="gallery.html">ギャラリー</a></li>
+        <li><a href="schedule.html">スケジュール</a></li>
+        <li><a href="rules.html">ルール</a></li>
+        <li><a href="index.html#join">加入する</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ===== PAGE HERO ===== -->
+  <div class="page-hero">
+    <canvas class="page-hero-particles" id="page-hero-canvas"></canvas>
+    <div class="page-hero-content">
+      <div class="hero-badge">🌸 Gallery 🌸</div>
+      <h1>ギャラリー</h1>
+      <p>COUNTRYの冒険の記録</p>
+      <div class="page-hero-deco">
+        <span></span><em>✦</em><span></span>
+      </div>
+    </div>
+    <div class="breadcrumb">
+      <a href="index.html">HOME</a><span>›</span>GALLERY
+    </div>
+  </div>
+
+  <!-- ===== FILTER BAR ===== -->
+  <div class="gallery-filter-bar">
+    <div class="container">
+      <div class="filter-tabs">
+        <button class="filter-tab active" data-filter="all">すべて</button>
+        <button class="filter-tab" data-filter="landscape">風景</button>
+        <button class="filter-tab" data-filter="battle">バトル</button>
+        <button class="filter-tab" data-filter="guild">ギルド活動</button>
+        <button class="filter-tab" data-filter="seasonal">ギルドイベント</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== GALLERY GRID ===== -->
+  <div class="subpage-body">
+    <div class="container">
+
+      <!-- Featured large item -->
+      <div class="gallery-featured reveal-item" data-filter-tag="guild">
+        <canvas class="gallery-canvas" id="gc-featured" width="1200" height="520" data-scene="banner"></canvas>
+        <div class="gallery-overlay">
+          <div class="gallery-info">
+            <span class="gallery-tag">🌸 ギルドバナー</span>
+            <h3>COUNTRY — 黒い砂漠</h3>
+            <p>Since 2021.03.22</p>
+          </div>
+          <button class="gallery-expand" data-scene="banner" data-caption="COUNTRYギルドのシンボルアート。2021年の発足から仲間と共に歩んできた歴史。">
+            <span>🔍</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Grid -->
+      <div class="gallery-grid" id="gallery-grid">
+
+        <!-- ==============================================
+             ▼ ギャラリー画像①【風景】
+             画像: Images/Landscape/landscape1.jpg
+             ============================================== -->
+        <div class="gallery-item reveal-item" data-filter-tag="landscape">
+          <img class="gallery-img" src="Images/Landscape/landscape1.jpg" alt="桜の木の下で集合">
+          <div class="gallery-overlay">
+            <div class="gallery-info">
+              <span class="gallery-tag">🌸 風景</span>
+              <h3>桜の木の下で</h3>
+            </div>
+            <button class="gallery-expand-img" data-src="Images/Landscape/landscape1.jpg" data-caption="春の桜が咲く中、みんなで集合写真🌸のんびりした時間が最高！">🔍</button>
+          </div>
+        </div>
+
+        <!-- ==============================================
+             ▼ ギャラリー画像②【ギルド活動】
+             画像: Images/Concert/concert1.jpg
+             ============================================== -->
+        <div class="gallery-item reveal-item" data-filter-tag="guild">
+          <img class="gallery-img" src="Images/Concert/concert1.jpg" alt="コンサート集会①">
+          <div class="gallery-overlay">
+            <div class="gallery-info">
+              <span class="gallery-tag">🎵 ギルド活動</span>
+              <h3>ギルドコンサート</h3>
+            </div>
+            <button class="gallery-expand-img" data-src="Images/Concert/concert1.jpg" data-caption="招待して集まってもらったみんなで楽しんだコンサートイベント🎵">🔍</button>
+          </div>
+        </div>
+
+        <!-- ==============================================
+             ▼ ギャラリー画像③【バトル】
+             ============================================== -->
+        <div class="gallery-item reveal-item" data-filter-tag="battle">
+          <canvas class="gallery-canvas" width="600" height="340" data-scene="nodwar"></canvas>
+          <div class="gallery-overlay">
+            <div class="gallery-info">
+              <span class="gallery-tag">⚔️ バトル</span>
+              <h3>拠点戦の激闘</h3>
+            </div>
+            <button class="gallery-expand" data-scene="nodwar" data-caption="拠点戦！勝ち負けより楽しむことが大事。全力で挑んだ一戦。">🔍</button>
+          </div>
+        </div>
+
+        <!-- ==============================================
+             ▼ ギャラリー画像④【ギルド活動】
+             画像: Images/Concert/concert2.png
+             ============================================== -->
+        <div class="gallery-item reveal-item" data-filter-tag="guild">
+          <img class="gallery-img" src="Images/Concert/concert2.png" alt="コンサート集会②">
+          <div class="gallery-overlay">
+            <div class="gallery-info">
+              <span class="gallery-tag">🎵 ギルド活動</span>
+              <h3>ギルドコンサート②</h3>
+            </div>
+            <button class="gallery-expand-img" data-src="Images/Concert/concert2.png" data-caption="幻想的な照明の中で行われたギルドコンサート✨みんなで盛り上がった！">🔍</button>
+          </div>
+        </div>
+
+        <!-- ==============================================
+             ▼ ギャラリー画像⑤【風景】
+             画像: Images/Landscape/landscape2.png
+             ============================================== -->
+        <div class="gallery-item reveal-item" data-filter-tag="landscape">
+          <img class="gallery-img" src="Images/Landscape/landscape2.png" alt="空中ドラゴンと冒険者">
+          <div class="gallery-overlay">
+            <div class="gallery-info">
+              <span class="gallery-tag">🐉 風景</span>
+              <h3>空の旅（グリフォンに運ばれながらの演奏）</h3>
+            </div>
+            <button class="gallery-expand-img" data-src="Images/Landscape/landscape2.png" data-caption="グリフォンに運ばれながらの空中演奏！どんな状況でも音楽は止まらない✨">🔍</button>
+          </div>
+        </div>
+
+        <!-- ==============================================
+             ▼ ギャラリー画像⑧【風景】（新規追加）
+             画像: Images/Landscape/landscape3.jpg
+             ============================================== -->
+        <div class="gallery-item reveal-item" data-filter-tag="landscape">
+          <img class="gallery-img" src="Images/Landscape/landscape3.jpg" alt="農場スタイルで集合">
+          <div class="gallery-overlay">
+            <div class="gallery-info">
+              <span class="gallery-tag">🌾 風景</span>
+              <h3>農場スタイルで集合！</h3>
+            </div>
+            <button class="gallery-expand-img" data-src="Images/Landscape/landscape3.jpg" data-caption="お揃いの麦わら帽子でポーズ！こういうノリが好き🌾">🔍</button>
+          </div>
+        </div>
+
+        <!-- ==============================================
+             ▼ ギャラリー画像⑥【バトル】
+             ============================================== -->
+        <div class="gallery-item reveal-item" data-filter-tag="battle">
+          <canvas class="gallery-canvas" width="600" height="340" data-scene="arena"></canvas>
+          <div class="gallery-overlay">
+            <div class="gallery-info">
+              <span class="gallery-tag">⚡ バトル</span>
+              <h3>対人練習アリーナ</h3>
+            </div>
+            <button class="gallery-expand" data-scene="arena" data-caption="カスタムソラレや1v1練習会。初心者でも安心して参加できる練習の場！">🔍</button>
+          </div>
+        </div>
+
+        <!-- ==============================================
+             ▼ ギャラリー画像⑦【ギルド活動】
+             画像: Images/Concert/concert3.jpg
+             ============================================== -->
+        <div class="gallery-item reveal-item" data-filter-tag="guild">
+          <img class="gallery-img" src="Images/Concert/concert3.jpg" alt="ギルド集合写真">
+          <div class="gallery-overlay">
+            <div class="gallery-info">
+              <span class="gallery-tag">🌸 ギルド活動</span>
+              <h3>ギルド集合写真</h3>
+            </div>
+            <button class="gallery-expand-img" data-src="Images/Concert/concert3.jpg" data-caption="COUNTRYとゲストの仲間たち！">🔍</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Load more button -->
+      <div class="gallery-load-more">
+        <button class="btn btn-secondary" id="load-more-btn" style="color:#E391B1;border-color:rgba(227,145,177,0.4);">
+          もっと見る 🌸
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer id="footer">
+    <div class="footer-top-deco"></div>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="footer-logo"><span>✦</span> COUNTRY <span>✦</span></div>
+          <p class="footer-tagline">黒い砂漠 冒険者ギルド</p>
+        </div>
+        <div class="footer-links">
+          <a href="index.html">ホーム</a>
+          <a href="gallery.html">ギャラリー</a>
+          <a href="schedule.html">スケジュール</a>
+          <a href="rules.html">ルール</a>
+          <a href="index.html#join">加入する</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 COUNTRY Guild. All rights reserved.</p>
+        <p class="footer-disclaimer">「黒い砂漠」はPEARL ABYSS社の登録商標です。本サイトは非公式のファンサイトです。</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/images.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/gallery.js"></script>
+  <script src="js/bgm.js" defer></script>
+</body>
+</html>
