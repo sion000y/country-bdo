@@ -1,65 +1,85 @@
 /* ============================================================
    COUNTRY Guild — bgm.js
-   BGM自動再生 + ON/OFFトグルボタン
    ============================================================ */
 (function () {
   'use strict';
 
   const STORAGE_KEY = 'country_bgm_muted';
+  let audio = null;
+  let unlocked = false;
 
-  const audio   = new Audio('audio/bgm.mp3');
-  audio.loop    = true;
-  audio.volume  = 0.12;
-  audio.preload = 'auto';
-  audio.muted   = localStorage.getItem(STORAGE_KEY) === 'true';
+  function unlock() {
+    if (unlocked) return;
+    unlocked = true;
 
-  /* ── 再生 ── */
-  function play() {
-    if (audio.muted) return;
-    audio.play().catch(() => {});
-  }
+    /* passiveなしの同期コンテキストでAudio作成＆再生 */
+    audio = new Audio('audio/bgm.mp3');
+    audio.loop   = true;
+    audio.volume = 0.12;
+    audio.muted  = localStorage.getItem(STORAGE_KEY) === 'true';
 
-  /* ── ユーザー操作で再生（再生済みなら解除） ── */
-  function onInteraction() {
-    if (!audio.paused) {
-      removeListeners();
-      return;
+    if (!audio.muted) {
+      audio.play().catch(() => {});
     }
-    play();
-    /* 再生成功したらリスナー解除（少し待って確認） */
-    setTimeout(() => { if (!audio.paused) removeListeners(); }, 300);
+
+    updateBtn();
+
+    /* リスナー解除 */
+    ['touchstart', 'touchend', 'pointerdown', 'click'].forEach(ev =>
+      document.removeEventListener(ev, unlock)
+    );
   }
 
-  const EVENTS = ['pointerdown', 'scroll', 'keydown', 'touchstart'];
-  function addListeners()    { EVENTS.forEach(ev => document.addEventListener(ev,    onInteraction, { passive: true })); }
-  function removeListeners() { EVENTS.forEach(ev => document.removeEventListener(ev, onInteraction)); }
+  /* ── ボタン更新 ── */
+  function updateBtn() {
+    const btn = document.getElementById('bgm-toggle');
+    if (!btn) return;
+    const muted = audio ? audio.muted : (localStorage.getItem(STORAGE_KEY) === 'true');
+    btn.innerHTML = muted ? '🔇' : '🎵';
+  }
 
-  /* ── ボタン ── */
+  /* ── ボタン生成 ── */
   function createButton() {
     const btn = document.createElement('button');
     btn.id = 'bgm-toggle';
+    btn.innerHTML = localStorage.getItem(STORAGE_KEY) === 'true' ? '🔇' : '🎵';
 
-    function update() {
-      btn.innerHTML = audio.muted ? '🔇' : '🎵';
-      btn.title     = audio.muted ? 'BGM OFF → クリックでON' : 'BGM ON → クリックでOFF';
-    }
-    update();
-    document.body.appendChild(btn);
-
-    btn.addEventListener('click', e => {
-      e.stopPropagation(); /* onInteractionの二重発火防止 */
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (!audio) {
+        unlock(); /* 初回タップがボタンの場合もここで初期化 */
+        return;
+      }
       audio.muted = !audio.muted;
       localStorage.setItem(STORAGE_KEY, String(audio.muted));
-      update();
-      if (!audio.muted) play();
+      btn.innerHTML = audio.muted ? '🔇' : '🎵';
+      if (!audio.muted) audio.play().catch(() => {});
     });
+
+    document.body.appendChild(btn);
   }
 
   /* ── 初期化 ── */
   function init() {
     createButton();
-    addListeners();
-    play(); /* 自動再生を試みる（ブロックされても問題なし） */
+
+    /* PCは即時再生を試みる */
+    audio = new Audio('audio/bgm.mp3');
+    audio.loop   = true;
+    audio.volume = 0.12;
+    audio.muted  = localStorage.getItem(STORAGE_KEY) === 'true';
+    audio.play().then(() => {
+      unlocked = true;
+      updateBtn();
+    }).catch(() => {
+      /* スマホ等でブロックされた場合はタッチを待つ */
+      audio = null;
+      unlocked = false;
+      /* passive:false で同期的に呼ぶ */
+      ['touchstart', 'touchend', 'pointerdown', 'click'].forEach(ev =>
+        document.addEventListener(ev, unlock, { passive: false })
+      );
+    });
   }
 
   document.readyState === 'loading'

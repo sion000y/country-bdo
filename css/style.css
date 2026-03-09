@@ -1268,3 +1268,49 @@ body.hero-locked button.hero-scroll-hint {
   0%, 100% { transform: translateX(-50%) translateY(0); }
   50%       { transform: translateX(-50%) translateY(8px); }
 }
+
+/* ── スマホ横スクロール・はみ出し防止 ────────────────────── */
+html {
+  overflow-x: hidden;
+}
+@media (max-width: 768px) {
+  body {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+  * {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  canvas {
+    max-width: 100% !important;
+  }
+  .about-highlight {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding: 1.2rem 1rem !important;
+    overflow: hidden;
+  }
+  .about-highlight ul {
+    align-items: flex-start !important;
+    text-align: left;
+  }
+  .about-highlight li {
+    white-space: normal !important;
+    word-break: break-word;
+    text-align: left;
+  }
+  /* ヒーローセクション */
+  #hero-canvas {
+    max-width: 100vw !important;
+  }
+  /* アクティビティカード */
+  .activity-canvas {
+    width: 100% !important;
+    height: auto !important;
+  }
+  /* 冒険の記録 */
+  .gp-grid {
+    overflow: hidden;
+  }
+}
